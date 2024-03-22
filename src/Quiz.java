@@ -49,6 +49,20 @@ public class Quiz implements  ActionListener{
     JTextField percentage = new JTextField();
 
 
+    Timer timer = new Timer(1000, new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            seconds--;
+            seconds_left.setText(String.valueOf(seconds));
+            if(seconds<=0) {
+                displayAnswer();
+            }
+
+        }
+    });
+
+
 
 
     public  Quiz() {
@@ -84,7 +98,6 @@ public class Quiz implements  ActionListener{
         buttonA.setText("A");
 
 
-
         buttonB.setBounds(0, 200, 100, 100);
         buttonB.setFont(new Font("MV Boli",Font.BOLD,35));
         buttonB.setFocusable(false);
@@ -92,13 +105,11 @@ public class Quiz implements  ActionListener{
         buttonB.setText("B");
 
 
-
         buttonC.setBounds(0, 300, 100, 100);
         buttonC.setFont(new Font("MV Boli",Font.BOLD,35));
         buttonC.setFocusable(false);
         buttonC.addActionListener(this);
         buttonC.setText("C");
-
 
 
         buttonD.setBounds(0, 400, 100, 100);
@@ -197,6 +208,7 @@ public class Quiz implements  ActionListener{
             answer_labelB.setText(options[index][1]);
             answer_labelC.setText(options[index][2]);
             answer_labelD.setText(options[index][3]);
+            timer.start();
 
         }
 
@@ -242,6 +254,7 @@ public class Quiz implements  ActionListener{
     }
 
     public  void  displayAnswer() {
+        timer.stop();
         buttonA.setEnabled(false);
         buttonB.setEnabled(false);
         buttonC.setEnabled(false);
@@ -260,11 +273,50 @@ public class Quiz implements  ActionListener{
             answer_labelD.setForeground(new Color(255,0,0));
         }
 
+        Timer pause = new Timer(2000, new ActionListener() {
+            @Override
+            public  void actionPerformed(ActionEvent e) {
+                answer_labelA.setForeground(new Color(255,0,0));
+                answer_labelB.setForeground(new Color(255,0,0));
+                answer_labelC.setForeground(new Color(255,0,0));
+                answer_labelD.setForeground(new Color(255,0,0));
+
+                answer = ' ';
+                seconds=10;
+                seconds_left.setText(String.valueOf(seconds));
+                buttonA.setEnabled(true);
+                buttonB.setEnabled(true);
+                buttonC.setEnabled(true);
+                buttonD.setEnabled(true);
+                index++;
+                nextQuestion();
+            }
+        });
+        pause.setRepeats(false);
+        pause.start();
     }
+
 
     public  void results() {
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+        buttonD.setEnabled(false);
+
+        result = (int)(correct_guesses/(double)total_questions)*100;
+
+        textfield.setText("RESULTS!");
+        textArea.setText("");
+        answer_labelA.setText("");
+        answer_labelB.setText("");
+        answer_labelC.setText("");
+        answer_labelD.setText("");
+
+        number_right.setText("("+correct_guesses+"/"+total_questions+")");
+        percentage.setText(result+"%");
+
+        frame.add(percentage);
+        frame.add(number_right);
 
     }
-
-
 }

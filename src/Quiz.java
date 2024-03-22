@@ -192,16 +192,73 @@ public class Quiz implements  ActionListener{
         }
         else {
             textfield.setText("Questions  "+(index+1));
+            textArea.setText(questions[index]);
+            answer_labelA.setText(options[index][0]);
+            answer_labelB.setText(options[index][1]);
+            answer_labelC.setText(options[index][2]);
+            answer_labelD.setText(options[index][3]);
+
         }
 
     }
 
     @Override
     public  void  actionPerformed(ActionEvent e) {
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+        buttonD.setEnabled(false);
+
+        if(e.getSource()==buttonA){
+            answer= 'A';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+
+        if(e.getSource()==buttonB){
+            answer= 'B';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+
+        if(e.getSource()==buttonC){
+            answer= 'C';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+
+        if(e.getSource()==buttonD){
+            answer= 'D';
+            if(answer == answers[index]){
+                correct_guesses++;
+            }
+        }
+
+        displayAnswer();
 
     }
 
     public  void  displayAnswer() {
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+        buttonD.setEnabled(false);
+
+        if(answers[index] != 'A'){
+            answer_labelA.setForeground(new Color(255,0,0));
+        }
+        if(answers[index] != 'B'){
+            answer_labelB.setForeground(new Color(255,0,0));
+        }
+        if(answers[index] != 'C'){
+            answer_labelC.setForeground(new Color(255,0,0));
+        }
+        if(answers[index] != 'D'){
+            answer_labelD.setForeground(new Color(255,0,0));
+        }
 
     }
 
